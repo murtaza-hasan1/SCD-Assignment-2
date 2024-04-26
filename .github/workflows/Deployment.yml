@@ -37,13 +37,8 @@ jobs:
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
 
-      - name: Authenticate with Netlify
-        run: netlify login
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.SCD_A2 }}
-
       - name: Build the Project
         run: npm run build
 
       - name: Deploy to Netlify
-        run: netlify deploy --prod --dir=build
+        run: netlify deploy --prod --dir=build --auth ${{ secrets.SCD_A2 }}
