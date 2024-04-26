@@ -46,4 +46,4 @@ jobs:
       - name: Deploy to Netlify
         run: netlify deploy --prod --dir=build
         env:
-        NETLIFY_AUTH_TOKEN: ${{ secrets.SCD_A2 }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.SCD_A2 }}
