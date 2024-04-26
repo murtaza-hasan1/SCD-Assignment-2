@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: Build and Test
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     
     steps:
       - name: Checkout Repository
@@ -28,15 +28,22 @@ jobs:
   deploy:
     name: Deploy to Netlify
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli
+
+      - name: Login to Netlify
+        run: netlify login -i
+
+      - name: Build the Project
+        run: npm run build
+
       - name: Deploy to Netlify
-  uses: netlify/actions/cli@v1
-  with:
-    args: deploy --prod --dir=build
-  env:
+        run: netlify deploy --prod --dir=build
+        env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.SCD_A2 }}
