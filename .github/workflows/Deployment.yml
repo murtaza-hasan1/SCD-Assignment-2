@@ -42,7 +42,8 @@ jobs:
 
       - name: Deploy to Netlify
         run: |
-          netlify deploy --prod --dir=build --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          if [[ $? -eq 1 ]]; then
+          $result = netlify deploy --prod --dir=build --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --json
+          $json = $result | ConvertFrom-Json
+          if ($json.code -eq 1) {
             netlify sites:create --name "Your Site Name" --dir=build --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          fi
+          }
